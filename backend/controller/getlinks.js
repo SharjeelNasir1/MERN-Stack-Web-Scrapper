@@ -1,0 +1,31 @@
+
+
+
+var {PythonShell} = require('python-shell');
+
+
+exports.scrape=async (req,res)=>{
+
+  try{
+    console.log(req.body)
+    var options = {
+      
+      pythonOptions: ['-u'],
+      args: req.body.inputt
+      
+    };
+    
+
+    PythonShell.run('C:/Users/Admin/Downloads/Compressed/webscrapper-main/backend/controller/google_scholar_links.py', options, function (err, results) {
+      if (err) 
+        throw err;
+      
+      console.log(results);
+      res.json({links:results,success:true})
+    });
+}
+catch(err){
+  res.json({ message: error.message,success:false }); 
+}
+
+}
