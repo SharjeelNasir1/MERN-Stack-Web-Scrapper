@@ -1,4 +1,4 @@
-
+import Avatar from '@material-ui/core/Avatar';
 import React from 'react';
 import {auth} from '../firebase';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
@@ -27,7 +27,16 @@ import ListItemText from '@material-ui/core/ListItemText';
 import axios from 'axios'
 import {useState} from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress';
+import circle from './circle.png';
+import ImageMapper from 'react-img-mapper';    
 
+function Disclaimer() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Disclaimer: (Kalhor et al., 2011: Xu et al., 2015) (Jeong et al., 2001; Liu et al., 2012; Sali et al., 2015: Song et al., 2017; Yang et al., 2015)'}
+    </Typography>
+  );
+}
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -114,6 +123,10 @@ export default function Home() {
     const [links, setlinks] = useState([]);
     const [input, setinput] = useState('');
     const [loading,setloading]=useState(false)
+
+    const[msg, setMsg] = useState(null);
+    const[getId, setId] = useState(-1);
+
     const classes = useStyles();
 
     function ListItemLink(props) {
@@ -161,6 +174,70 @@ export default function Home() {
         
     };
 
+    const handleClick = (id) => {
+      setId(id);
+      setMsg(id);
+    }
+
+    const handleLinkClick = (row, col) => {
+      // alert(`${categories[row][col]} is clicked!!`);
+      getlinks(categories[row][col]);
+    }
+
+    const categories = [
+  
+          [
+            "Fluorescent imaging",
+            "super-resolution imaging",
+            "live imaging"
+          ],
+        ["X-ray Tomography"],
+        ["cryo electron microscope"],
+      
+          [ 
+            "genome architecture mapping",
+            "Hi-C maps",
+            "fluorescent in-situ hybridization"
+          ],
+        ["integrative structure modeling"],
+          [
+          "protein structure determination",
+            "X-ray crystallography",
+            "electron microscope",
+            "nuclear magnetic resonance spectroscopy"
+          ],
+
+            [
+            "omics",
+            "proteomics",
+            "transcriptomics",
+            "metabolomics",
+            "genomics",
+            "lipidomics"
+          ],
+
+        ["computational systems biology"],
+        ["molecular graphics"]
+      
+    ]
+    const MAP = { 
+      name: "my-map",
+      areas: [
+        { id: 0, shape: "circle", coords: [119, 223, 55],},
+      { id: 1, shape: "circle", coords: [182, 130, 55], },
+      { id: 2, shape: "circle", coords: [293, 103, 55], },
+      { id: 3, shape: "circle", coords: [398, 148, 55], },
+      { id: 4, shape: "circle", coords: [449, 247, 55], },
+      { id: 5, shape: "circle", coords: [418, 353, 55], },
+      { id: 6, shape: "circle", coords: [325, 415, 55], },
+      { id: 7, shape: "circle", coords: [212, 407, 55], },
+      { id: 8, shape: "circle", coords: [131, 331, 55], },
+      
+
+    ]
+  };
+
+ 
     return (
         <React.Fragment>
         <CssBaseline />
@@ -195,16 +272,49 @@ export default function Home() {
                     </Button>
             </Toolbar>
         </AppBar>
-        {/* Hero unit */}
         <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <div className={classes.centered}>
+      <div className={classes.centered}> 
+      I<ImageMapper 
+        src={circle} 
+        map={MAP} 
+        strokeColor="#0099ff" 
+        lineWidth="2"
+        width="550"
+        height="500"
+        onClick={(area)=>handleClick(area.id)}
+
+        />
+        {msg !==null? <div className={classes.list}>
+                    <List 
+                    component="nav" 
+                    aria-label="secondary mailbox folders"
+                    >
+                    {categories[getId].map((value, index) => {
+                        return (
+                            <ListItemLink style={{backgroundColor: '#ccebff', margin: 5}}
+                            onClick={()=>handleLinkClick(getId, index)}>
+                                <ListItemText primary={(index + 1) + " " + value} />
+                            </ListItemLink>
+                        )
+                    })}
+                    </List>
+                    </div> : null}
+        
+        </div>
+        <Box mt={5}>
+            <Disclaimer />
+            </Box>
+        </Container>
+
+        <Container maxWidth="sm" component="main" className={classes.heroContent}>
+        {/* <div className={classes.centered}>
                     <form  noValidate autoComplete="off" onSubmit={(e) => onSubmit(e)}>
                         <TextField id="outlined-basic" label="enter keyword " variant="outlined" onChange={(e) => onChange(e)} />
                         
                     </form>
-        </div>
-        <br/>
+        </div> */}
             <h2>Google Scholar Links:</h2>
+
             {loading?
                     <div className={classes.centered}>
                         <CircularProgress />

@@ -16,7 +16,7 @@ exports.scrape=async (req,res)=>{
     };
     
 
-    PythonShell.run('C:/Users/Admin/Downloads/Compressed/webscrapper-main/backend/controller/google_scholar_links.py', options, function (err, results) {
+    PythonShell.run('D:\React Js Apps\MERN-Stack-Web-Scrapper\backend\controller\google_scholar_links.py', options, function (err, results) {
       if (err) 
         throw err;
       

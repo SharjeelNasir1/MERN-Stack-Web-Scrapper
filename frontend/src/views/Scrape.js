@@ -86,6 +86,8 @@ function Scrape() {
                 Logout
                 </Button>
                 <h2>Search Articles:</h2>
+                <h2>Search Articles:</h2>
+
                 <div className={classes.centered}>
                     <form  noValidate autoComplete="off" onSubmit={(e) => onSubmit(e)}>
                         <TextField id="outlined-basic" label="enter keyword " variant="outlined" onChange={(e) => onChange(e)} />
@@ -94,6 +96,7 @@ function Scrape() {
                 </div>
                 <br/>
                 <Divider />
+                <img src="../circle.png"/>
                 <h2>Google Scholar Links:</h2>
                 
                 {loading?
