@@ -28,6 +28,7 @@ import axios from 'axios'
 import {useState} from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import circle from './circle.png';
+import betacell from './betacell.jpeg';
 import ImageMapper from 'react-img-mapper';    
 
 function Disclaimer() {
@@ -37,6 +38,15 @@ function Disclaimer() {
     </Typography>
   );
 }
+
+function BetaCell() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {`Beta cells are cells that make insulin, a hormone that controls the level of glucose (a type of sugar) in the blood. Beta cells are found in the pancreas within clusters of cells known as islets. In type 1 diabetes, the body's immune system mistakenly destroys the beta cells`}
+    </Typography>
+  );
+}
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -144,13 +154,26 @@ export default function Home() {
         console.log(body);
         
         setloading(true)
-        const res=await axios.post("http://localhost:5000/links",body,config)
-        console.log(res.data);
-        if(res.data.success){
+        // const res=await axios.post("http://localhost:5000/links",body,config)
+        // console.log(res.data);
+        // if(res.data.success){
+        //     setlinks(res.data.links)
+        //     console.log(links)
+        //     setloading(false)
+        // }
+
+        axios.post("http://localhost:5000/links",body,config)
+        .then(res => {
             setlinks(res.data.links)
             console.log(links)
             setloading(false)
-        }
+        })
+        .catch(e => {
+          console.log(e.message);
+        })
+        .finally(() =>{
+          setloading(false);
+        })
        
         
         
@@ -274,6 +297,10 @@ export default function Home() {
         </AppBar>
         <Container maxWidth="sm" component="main" className={classes.heroContent}>
       <div className={classes.centered}> 
+      <img src={betacell} width='400'/>
+      <Box mt={5}>
+            <BetaCell />
+            </Box>
       I<ImageMapper 
         src={circle} 
         map={MAP} 
@@ -284,6 +311,9 @@ export default function Home() {
         onClick={(area)=>handleClick(area.id)}
 
         />
+        <Box mt={5}>
+            <Disclaimer />
+            </Box>
         {msg !==null? <div className={classes.list}>
                     <List 
                     component="nav" 
@@ -301,9 +331,7 @@ export default function Home() {
                     </div> : null}
         
         </div>
-        <Box mt={5}>
-            <Disclaimer />
-            </Box>
+        
         </Container>
 
         <Container maxWidth="sm" component="main" className={classes.heroContent}>
