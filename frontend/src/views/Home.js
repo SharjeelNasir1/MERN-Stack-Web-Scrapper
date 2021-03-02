@@ -39,14 +39,6 @@ function Disclaimer() {
   );
 }
 
-function BetaCell() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {`Beta cells are cells that make insulin, a hormone that controls the level of glucose (a type of sugar) in the blood. Beta cells are found in the pancreas within clusters of cells known as islets. In type 1 diabetes, the body's immune system mistakenly destroys the beta cells`}
-    </Typography>
-  );
-}
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -297,10 +289,7 @@ export default function Home() {
         </AppBar>
         <Container maxWidth="sm" component="main" className={classes.heroContent}>
       <div className={classes.centered}> 
-      <img src={betacell} width='400'/>
-      <Box mt={5}>
-            <BetaCell />
-            </Box>
+      
       I<ImageMapper 
         src={circle} 
         map={MAP} 

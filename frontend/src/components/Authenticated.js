@@ -35,7 +35,7 @@ const Authenticated = (props) => {
             return props.children;
           }
           else if (!isLoggedIn) {
-            return <Redirect to="/login"/>
+            return <Redirect to="/home"/>
           }
       }
       
